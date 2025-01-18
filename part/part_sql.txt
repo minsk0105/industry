@@ -1,0 +1,24 @@
+CREATE TABLE students (
+	sno number(10) not null primary key,
+	sname varchar2(10),
+	partno number(5)
+);
+
+INSERT INTO students VALUES ('202201001','지효','101');
+INSERT INTO students VALUES ('202201002','나연','102');
+INSERT INTO students VALUES ('202301001','정연','103');
+INSERT INTO students VALUES ('202301002','모모','104');
+INSERT INTO students VALUES ('202401001','사나','101');
+INSERT INTO students VALUES ('202401002','미나','102');
+
+CREATE TABLE part (
+	partno number(5) not null primary key,
+	pname varchar2(20),
+	status number(1)
+);
+
+INSERT INTO part VALUES ('101','컴퓨터공학','1');
+INSERT INTO part VALUES ('102','인공지능','1');
+INSERT INTO part VALUES ('103','산업공학','1');
+INSERT INTO part VALUES ('104','산업디자인','1');
+INSERT INTO part VALUES ('105','전자공학','0');
