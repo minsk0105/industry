@@ -1,0 +1,67 @@
+CREATE TABLE tbl_student_201905 (
+	syear CHAR(1) NOT NULL,
+	sclass CHAR(2) NOT NULL,
+	sno CHAR(2) NOT NULL,
+	sname VARCHAR2(20),
+	birth CHAR(8),
+	gender CHAR(1),
+	tel1 CHAR(3),
+	tel2 CHAR(4),
+	tel3 CHAR(4),
+	PRIMARY KEY(syear, sclass, sno)
+);
+
+INSERT INTO tbl_student_201905 VALUES ('1','01','01','김학생','20020101','F','010','1234','1001');
+INSERT INTO tbl_student_201905 VALUES ('1','01','02','이학생','20020201','M','010','1234','1002');
+INSERT INTO tbl_student_201905 VALUES ('1','01','03','박학생','20020301','M','010','1234','1003');
+INSERT INTO tbl_student_201905 VALUES ('1','02','01','조학생','20020401','M','010','1234','1004');
+INSERT INTO tbl_student_201905 VALUES ('1','02','02','유학생','20020501','M','010','1234','1005');
+INSERT INTO tbl_student_201905 VALUES ('1','02','03','여학생','20020601','M','010','1234','1006');
+INSERT INTO tbl_student_201905 VALUES ('1','03','01','남학생','20020701','F','010','1234','1007');
+INSERT INTO tbl_student_201905 VALUES ('1','03','02','황학생','20020801','F','010','1234','1008');
+INSERT INTO tbl_student_201905 VALUES ('1','03','03','전학생','20020901','F','010','1234','1009');
+
+CREATE TABLE tbl_dept_201905 (
+	syear CHAR(1) NOT NULL,
+	sclass CHAR(2) NOT NULL,
+	tname VARCHAR2(20),
+	PRIMARY KEY(syear, sclass)
+);
+
+INSERT INTO tbl_dept_201905 VALUES ('1','01','김교사');
+INSERT INTO tbl_dept_201905 VALUES ('1','02','이교사');
+INSERT INTO tbl_dept_201905 VALUES ('1','03','박교사');
+
+CREATE TABLE tbl_score_201905 (
+	syear CHAR(1),
+	sclass CHAR(2),
+	sno CHAR(2),
+	kor NUMBER(3),
+	eng NUMBER(3),
+	mat NUMBER(3),
+	FOREIGN KEY (syear, sclass, sno) REFERENCES tbl_student_201905(syear, sclass, sno)
+);
+
+INSERT INTO tbl_score_201905 VALUES ('1','01','01','50','50','50');
+INSERT INTO tbl_score_201905 VALUES ('1','01','02','60','40','100');
+INSERT INTO tbl_score_201905 VALUES ('1','01','03','70','70','70');
+INSERT INTO tbl_score_201905 VALUES ('1','02','01','80','80','80');
+INSERT INTO tbl_score_201905 VALUES ('1','02','02','50','50','50');
+INSERT INTO tbl_score_201905 VALUES ('1','02','03','40','90','80');
+INSERT INTO tbl_score_201905 VALUES ('1','03','01','70','70','70');
+INSERT INTO tbl_score_201905 VALUES ('1','03','02','80','60','90');
+INSERT INTO tbl_score_201905 VALUES ('1','03','03','90','80','70');
+
+SELECT s.syear, s.sclass, s.sno, s.sname, s.gender,
+	   c.kor, c.eng, c.mat,
+	   (c.kor + c.eng + c.mat) AS total, TO_CHAR((c.kor + c.eng + c.mat) / 3, 'FM99.0') AS average
+FROM tbl_student_201905 s JOIN tbl_score_201905 c ON s.syear = c.syear AND s.sclass = c.sclass AND s.sno = c.sno
+
+SELECT sum(c.kor), sum(c.eng), sum(c.mat)
+FROM tbl_student_201905 s JOIN tbl_score_201905 c ON s.syear = c.syear AND s.sclass = c.sclass AND s.sno = c.sno
+
+SELECT ROUND(sum(c.kor) / count(c.kor), 1) AS akor, ROUND(sum(c.eng) / count(c.eng), 1) AS aeng, ROUND(sum(c.mat) / count(c.mat), 1) AS amat
+FROM tbl_student_201905 s JOIN tbl_score_201905 c ON s.syear = c.syear AND s.sclass = c.sclass AND s.sno = c.sno
+
+SELECT d.syear, d.sclass, d.tname, SUM(s.kor), SUM(s.eng), SUM(s.mat), ROUND(AVG(s.kor), 1), ROUND(AVG(s.eng), 1), ROUND(AVG(s.mat), 1)
+FROM tbl_dept_201905 d JOIN tbl_score_201905 s ON d.syear = s.syear AND d.sclass = s.sclass GROUP BY d.syear, d.sclass, d.tname
