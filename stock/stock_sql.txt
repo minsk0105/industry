@@ -1,0 +1,46 @@
+CREATE TABLE tbl_buy_stock (
+	buy_date CHAR(8) NOT NULL,
+	stock_item_code CHAR(6) NOT NULL,
+	buy_number NUMBER(6),
+	buy_price NUMBER(6),
+	dept_code CHAR(3),
+	PRIMARY KEY(buy_date, stock_item_code)
+);
+
+INSERT INTO tbl_buy_stock VALUES ('20220301','100001','1000','50000','100');
+INSERT INTO tbl_buy_stock VALUES ('20220301','100002','1000','60000','100');
+INSERT INTO tbl_buy_stock VALUES ('20220301','100003','1000','70000','200');
+INSERT INTO tbl_buy_stock VALUES ('20220301','100004','1000','80000','300');
+INSERT INTO tbl_buy_stock VALUES ('20220301','100005','1000','90000','400');
+INSERT INTO tbl_buy_stock VALUES ('20220302','100001','1000','55000','100');
+INSERT INTO tbl_buy_stock VALUES ('20220302','100002','2000','66000','100');
+INSERT INTO tbl_buy_stock VALUES ('20220302','100003','3000','77000','200');
+INSERT INTO tbl_buy_stock VALUES ('20220302','100004','4000','88000','300');
+INSERT INTO tbl_buy_stock VALUES ('20220302','100005','5000','99000','400');
+INSERT INTO tbl_buy_stock VALUES ('20220303','100001','1000','10000','100');
+INSERT INTO tbl_buy_stock VALUES ('20221205','100001','2000','55000','200');
+
+CREATE TABLE tbl_dept (
+	dept_code CHAR(3) NOT NULL PRIMARY KEY,
+	dept_name VARCHAR2(24),
+	dept_offr VARCHAR2(10)
+);
+
+INSERT INTO tbl_dept VALUES ('100','국내펀드1팀','김국내');
+INSERT INTO tbl_dept VALUES ('200','가치주펀드1팀','이가치');
+INSERT INTO tbl_dept VALUES ('300','배당주펀드1팀','박배당');
+INSERT INTO tbl_dept VALUES ('400','채권혼합펀드1팀','조채권');
+
+CREATE TABLE tbl_stock_item (
+	stock_item_code CHAR(6) NOT NULL PRIMARY KEY,
+	stock_item_name CHAR(24),
+	stock_item_market VARCHAR2(10),
+	stock_item_category VARCHAR2(12),
+	stock_item_listed_date CHAR(8)
+);
+
+INSERT INTO tbl_stock_item VALUES ('100001','삼성전자','코스피','전기전자','20000101');
+INSERT INTO tbl_stock_item VALUES ('100002','카카오','코스피','서비스업','20000102');
+INSERT INTO tbl_stock_item VALUES ('100003','셀트리온헬스케어','코스닥','유통','20000103');
+INSERT INTO tbl_stock_item VALUES ('100004','펄어비스','코스피','디지털','20000104');
+INSERT INTO tbl_stock_item VALUES ('100005','2차전지사업ETF','코스피','ETF','20000105');
